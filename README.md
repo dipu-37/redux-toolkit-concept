@@ -61,7 +61,39 @@ export const api = createApi({
 export const { useGetBlogsQuery } = api;
 
 ```
+---
+2) Fetch Blogs (RTK Query)
+In src/api/BaseApi.ts:
 
+createApi + fetchBaseQuery (base URL from NEXT_PUBLIC_API_URL)
+
+Example endpoint: getBlogs (GET /blogs)
+
+Use it inside a client component:
+
+---
+```
+'use client';
+import { useGetBlogsQuery } from '@/src/api/BaseApi';
+
+export default function BlogsList() {
+  const { data, isLoading, error } = useGetBlogsQuery();
+  if (isLoading) return <p>Loading…</p>;
+  if (error) return <p>Failed to load</p>;
+  return <ul>{data?.map((b: any) => <li key={b.id}>{b.title}</li>)}</ul>;
+}
+```
+---
+Render it from a server page:
+
+---
+```
+// app/page.tsx
+import BlogsList from './BlogsList'; // put this file under app/ or app/components/
+export default function Page() {
+  return <main><h1>Blogs</h1><BlogsList /></main>;
+}
+```
 ## src/lib/Provider.tsx
 ```
 'use client';
@@ -92,4 +124,23 @@ export async function createBlog(data: any) {
   return res.json();
 }
 
+```
+## Form 
+```
+const onSubmit = async (data: FormValues) => {
+  const res = await fetch('http://localhost:5000/blogs', { cache: 'no-store' });
+  const blogs = await res.json();
+
+  data.id = JSON.stringify(blogs.length + 1);
+  data.total_likes = '100';
+
+  try {
+    const result = await createBlog(data);
+    console.log(result);
+    return result;
+  } catch (err: any) {
+    console.log(err.message);
+    throw new Error(err.message);
+  }
+};
 ```
