@@ -62,7 +62,8 @@ export const { useGetBlogsQuery } = api;
 
 ```
 ---
-2) Fetch Blogs (RTK Query)
+
+### 2) Fetch Blogs (RTK Query)
 In src/api/BaseApi.ts:
 
 createApi + fetchBaseQuery (base URL from NEXT_PUBLIC_API_URL)
