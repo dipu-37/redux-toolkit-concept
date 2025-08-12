@@ -7,6 +7,7 @@
 3. Run the project using `npm run dev`.
 
 ---
+```
 .
 ├─ app
 │  ├─ layout.tsx                # Wraps the app with Redux <Provider>
@@ -27,7 +28,7 @@
 ├─ package.json
 ├─ tsconfig.json
 └─ README.md
-
+```
 ## src/redux/store.ts
 ```
 import { configureStore } from '@reduxjs/toolkit';
